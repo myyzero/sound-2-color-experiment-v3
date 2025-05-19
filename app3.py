@@ -1,15 +1,13 @@
 import streamlit as st
 import pandas as pd
 import datetime
+from io import StringIO
 
 st.set_page_config(page_title="Sound-Color Association Experiment", layout="centered")
 
 st.title("🎧 Sound and Color Association Experiment")
 
-# 设定三组声音编号
 sound_numbers = [1, 2, 3]
-
-# 记录所有颜色选择
 colors = []
 
 for sound_num in sound_numbers:
@@ -20,7 +18,6 @@ for sound_num in sound_numbers:
     color = st.color_picker(f"🎨 Select color for Sound {sound_num}", "#ffffff", key=f"color_{sound_num}")
     colors.append((sound_num, color))
 
-# 提交按钮
 if st.button("✅ Submit your colors"):
     all_data = []
     for sound_num, color in colors:
@@ -38,11 +35,19 @@ if st.button("✅ Submit your colors"):
         }
         all_data.append(data)
 
-    try:
-        df = pd.read_csv("responses.csv")
-        df = pd.concat([df, pd.DataFrame(all_data)], ignore_index=True)
-    except FileNotFoundError:
-        df = pd.DataFrame(all_data)
+    df = pd.DataFrame(all_data)
 
-    df.to_csv("responses.csv", index=False)
+    # 将 DataFrame 转成 CSV 格式的字符串
+    csv_buffer = StringIO()
+    df.to_csv(csv_buffer, index=False)
+    csv_data = csv_buffer.getvalue()
+
     st.success("✅ Your colors have been saved. Thank you for participating!")
+
+    # 提供下载按钮
+    st.download_button(
+        label="Download your data as CSV",
+        data=csv_data,
+        file_name="responses.csv",
+        mime="text/csv"
+    )
