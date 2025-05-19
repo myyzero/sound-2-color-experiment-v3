@@ -1,50 +1,73 @@
 import streamlit as st
+import datetime
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaInMemoryUpload
+import io
 
-# ---- 配置区域 ----
-SERVICE_ACCOUNT_FILE = 'streamlitcolorapp-0a350e473431.json'  # 你的服务账号JSON文件名
-SCOPES = ['https://www.googleapis.com/auth/drive.file']
-FOLDER_ID = 'S2C_data'  # 替换成目标文件夹ID
+st.set_page_config(page_title="音频颜色联想实验", layout="centered")
 
-# ---- Google Drive 上传函数 ----
-@st.cache_resource
-def get_drive_service():
-    creds = service_account.Credentials.from_service_account_file(
-        SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-    return build('drive', 'v3', credentials=creds)
+st.title("🎧 音频颜色联想实验")
+st.write("点击按钮播放音频，音频播放结束后，请选择你联想到的颜色，然后点击提交。")
 
-def upload_csv_to_drive(df: pd.DataFrame, filename: str, drive_service):
-    csv_data = df.to_csv(index=False)
-    media = MediaInMemoryUpload(csv_data.encode('utf-8'), mimetype='text/csv')
-    file_metadata = {
-        'name': filename,
-        'parents': [FOLDER_ID]
-    }
-    file = drive_service.files().create(
-        body=file_metadata,
-        media_body=media,
-        fields='id'
-    ).execute()
-    return file.get('id')
+# 播放音频
+audio_file = open("your-audio.mp3", "rb")  # 请将你的音频文件命名为 your-audio.mp3 并放在同目录或相对路径下
+st.audio(audio_file.read(), format="audio/mp3")
 
-# ---- Streamlit 页面 ----
-st.title("上传CSV到Google Drive示例")
+# 颜色选择器
+color = st.color_picker("🎨 请选择你联想到的颜色", "#ffffff")
 
-# 生成测试数据
-df = pd.DataFrame({
-    '名字': ['Alice', 'Bob', 'Charlie'],
-    '年龄': [25, 30, 35]
-})
-st.write("预览数据：")
-st.dataframe(df)
+# 初始化 session_state 存储数据
+if "records" not in st.session_state:
+    st.session_state.records = []
 
-if st.button("上传CSV到Google Drive"):
+# Google Sheets 设置
+SHEET_ID = "1ga4yQT0oUc3X1a1kEO6FdP3vzxdTAV3AwxQ4W2jo_-Q"  # 👈 请替换为你的 Sheet ID
+SHEET_NAME = "Sound2ColorOutcome"              # 👈 请确保工作表名正确
+
+# 连接 Google Sheets
+def connect_to_gsheet():
+    scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+    creds = ServiceAccountCredentials.from_json_keyfile_name("streamlitcolorapp-0a350e473431.json", scope)  # 👈 替换文件名
+    client = gspread.authorize(creds)
+    sheet = client.open_by_key(SHEET_ID).worksheet(SHEET_NAME)
+    return sheet
+
+# 提交按钮
+if st.button("✅ 提交你的颜色"):
+
+    # 分解 RGB
+    r = int(color[1:3], 16)
+    g = int(color[3:5], 16)
+    b = int(color[5:7], 16)
+    timestamp = datetime.datetime.now().isoformat()
+
     try:
-        drive_service = get_drive_service()
-        file_id = upload_csv_to_drive(df, "测试上传.csv", drive_service)
-        st.success(f"上传成功！文件ID: {file_id}")
+        sheet = connect_to_gsheet()
+        sheet.append_row([timestamp, color, r, g, b])
+        st.success("✅ 你的数据已成功保存到 Google 表格！感谢参与！")
+
+        # 同时保存到本地内存
+        st.session_state.records.append({
+            "timestamp": timestamp,
+            "hex_color": color,
+            "r": r,
+            "g": g,
+            "b": b
+        })
     except Exception as e:
-        st.error(f"上传失败：{e}")
+        st.error(f"❌ 数据保存失败：{e}")
+
+# 如果内存有数据，生成 CSV 并提供下载
+if st.session_state.records:
+    df = pd.DataFrame(st.session_state.records)
+    csv_buffer = io.StringIO()
+    df.to_csv(csv_buffer, index=False)
+    csv_data = csv_buffer.getvalue()
+
+    st.download_button(
+        label="⬇️ 下载已提交的数据 CSV 文件",
+        data=csv_data,
+        file_name="submitted_colors.csv",
+        mime="text/csv"
+    )
