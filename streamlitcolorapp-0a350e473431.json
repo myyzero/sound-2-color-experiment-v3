@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "streamlitcolorapp",
+  "private_key_id": "0a350e47343128310f0b67c787da9ceed092350f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCa84JYT6zC0Cj5\ngzKwyBKma1mHI5Mzvr/JNLjJ5mOXOCJLg4koBMdF0+XcRLTntef6rnnlYgA+qe5e\nxTFzI8vPXRR191M+V2dH9PiTIEMwKfDdJtrBIg8ZtHXuxkCiuIYYEdz0V0sfiUcx\nyEF17XDDl754TQ0WO3IyXdJCeg2bVbrtr2Bxge2gGMunbGvu83MukonXtulZKizj\nD+HyofncobSmou6N4Wqwn2R0H23xoI27Lfi7kjiS8M+YpP+UPpK/2aQeSSlxagPB\np4N9YNXF+jazgDJD7R+OYhV4rR59s8w7VRYqCnaK/NRrpkjQ2vvUUjU6dhk6xyNR\nIoqcYfEtAgMBAAECggEAB5PjCviShVBywIkHAJg4OUVEspQtzbkFXgyjANSwiCOp\nobHEEl3xdNvBAP2nLzG5L4w6z9n0ExxyWNYh7fSRMgnmR0KaIpFZrq4vPdq1DnTu\nn5IX3pwQyvwFTHELlimZ/TFaceSW+urWvXuCoAbFnfscyHtUKYMsuYPXFYMsiS0b\no19jpqoopghRmin65scNWdE6ltZC2xXjMRB9goEkf5R3FYLxPbyxL+x/ZsFBnbB4\n+JmiUJ7IBTokgxzPqvTFd53xk9NiCQv866PICEyeyLSy0YCwJpl7hN1+meHSn5gB\njO1yv91bCTBubNoKeFs6HUVQRQJz8i69jC73Gu+tAQKBgQDMnw5Axo0nAR8wcynY\nBG3So2NeBDuMXhWOW1fTlQQBn6Cd6940f3g9UMCulVe1IX+djgiHJ5SWkiLKOOWW\nWyUDpJDQrs9kyHD9akD9AQCtpT3lS5OogItiCucQdHsoMN/siVuZ/t8pznano1vg\ni0X26p4Bl5w0T3dEIFWX+GsNbQKBgQDB26/RoBu63TNOKngCUq7VHKuqBg4J4gUu\nY6QKnKqW+PQYkYz+YAxyvKFXHjp5E7ItrKibA1Q/CX+GRa68Enwrymr/ObkKW1UL\nKeU7y8ye4FFSv20+qFVZpE7kKFhDBuL1bTO9ZtPYJ63nWSWjllwwuYFHLgQSZbSy\nJaguonbawQKBgQCRluInSJ6KEAxHBsnQ/2W8p7A95rkP6KlhvrBAxRgyp4c6leZm\naAP/bIOMNIpRQGJykeqTb6ATeiryw4TndDZj3yWCtb6usMdkJ8PRwHLhGl9t1FZd\nYAjMW4GIfbhbIltRC3J3oZbbQiG+qUbn/3BqfQirjVoBBkGP4YnFNWXGCQKBgQCI\nIgO3i12tvYQ30e7wgquvkDCkdxgIrKXCy8n4gcfxuOWBE0UVpNFZCUmradjaCZDI\nLkVAhff1RHA/FFP+UmTMQ5sbm6drtHNmIYeOlDEfKJszJqZKp9830gBsjEBe4Ukj\n3AnHaZw+YK7olVuvIvmeZcZ4+8F0QePAbl1KUmBwgQKBgQC7xPKc5YLZvB1z65Rt\n/hV39nS7XB2opOiZy47Li3w6SWFAwjTL71TL3UsxtMONhWBQUIxTB4z/sWnZ0ELA\nrYB5+m5ZaVEYpPHl0LpVKXUEFWeDmeHzBsiaHzB6mIb4AF6GO/0xnR2ALwfO/CWa\nhWDiiamsstKf6tHDJU5tLdYkvg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "myyserviceaccount@streamlitcolorapp.iam.gserviceaccount.com",
+  "client_id": "106669251340200567204",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/myyserviceaccount%40streamlitcolorapp.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
